@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+# -*- coding: utf-8 -*-
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+-->
+<metainfo>
+    <schemaVersion>2.0</schemaVersion>
+    <services>
+        <service>
+            <name>AZKABAN</name>
+            <displayName>Azkaban</displayName>
+            <comment>Azkaban is a batch workflow job scheduler created at LinkedIn to run Hadoop jobs. Azkaban resolves
+                the ordering through job dependencies and provides an easy to use web user interface to maintain and
+                track your workflows.
+            </comment>
+            <version>3.38.0</version>
+            <quickLinksConfigurations>
+                <quickLinksConfiguration>
+                    <fileName>quicklinks.json</fileName>
+                    <default>true</default>
+                </quickLinksConfiguration>
+            </quickLinksConfigurations>
+            <components>
+                <component>
+                    <name>AZKABAN_WEB</name>
+                    <displayName>Azkaban Web Server</displayName>
+                    <category>MASTER</category>
+                    <cardinality>1</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
+                    <commandScript>
+                        <script>scripts/azkaban_web.py</script>
+                        <scriptType>PYTHON</scriptType>
+                        <timeout>1200</timeout>
+                    </commandScript>
+                </component>
+
+                <component>
+                    <name>AZKABAN_EXECUTOR</name>
+                    <displayName>Azkaban Executor Server</displayName>
+                    <category>SLAVE</category>
+                    <cardinality>0+</cardinality>
+                    <versionAdvertised>true</versionAdvertised>
+                    <commandScript>
+                        <script>scripts/azkaban_executor.py</script>
+                        <scriptType>PYTHON</scriptType>
+                    </commandScript>
+                </component>
+
+            </components>
+
+            <configuration-dependencies>
+                <config-type>azkaban-executor.properties.xml</config-type>
+                <config-type>azkaban-users.xml</config-type>
+                <config-type>azkaban-web.properties.xml</config-type>
+                <config-type>log4j.properties.xml</config-type>
+            </configuration-dependencies>
+
+        </service>
+    </services>
+</metainfo>

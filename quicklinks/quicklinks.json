@@ -1,0 +1,25 @@
+{
+  "name": "default",
+  "description": "default quick links configuration",
+  "configuration": {
+    "protocol": {
+      "type": "HTTP_ONLY"
+    },
+    "links": [
+      {
+        "name": "azkaban_web",
+        "label": "Azkaban Web",
+        "component_name": "AZKABAN_WEB",
+        "requires_user_name": "false",
+        "url": "%@://%@:%@",
+        "port": {
+          "http_property": "jetty.port",
+          "http_default_property": 10101,
+          "regex": "^(\\d+)$",
+          "site": "azkaban-web.properties"
+        }
+      }
+    ]
+  }
+}
+
