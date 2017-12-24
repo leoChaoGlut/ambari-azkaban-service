@@ -18,6 +18,11 @@
 <configuration>
 
     <property>
+        <name>jetty.port</name>
+        <value>10101</value>
+    </property>
+
+    <property>
         <name>content</name>
         <display-name>azkaban.properties template</display-name>
         <description>Custom azkaban.properties</description>
@@ -31,20 +36,12 @@ azkaban.color=#FF3601
 azkaban.default.servlet.path=/index
 web.resource.dir=web/
 #
-database.type=mysql
-mysql.port=3306
-mysql.host=localhost
-mysql.database=azkaban
-mysql.user=azkaban
-mysql.password=azkaban
-mysql.numconnections=100
-#
 user.manager.class=azkaban.user.XmlUserManager
 user.manager.xml.file=conf/azkaban-users.xml
 #
 jetty.use.ssl=false
 jetty.maxThreads=25
-jetty.port=10101
+#jetty.port=10101
 #
 # Azkaban Executor settings
 executor.maxThreads=50

@@ -26,12 +26,11 @@
 
     <role name="r_admin" permissions="ADMIN"/>
     <group name="g_admin" roles="r_admin"/>
-    <user username="admin" password="121559258" groups="g_admin"/>
+    <user username="admin" password="admin" groups="g_admin"/>
 
     <role name="r_dev" permissions="READ,WRITE,CREATEPROJECTS"/>
     <group name="g_dev" roles="r_dev"/>
-    <user username="lzc" password="fox" groups="g_dev"/>
-    <user username="twq" password="tanweiquan" groups="g_dev"/>
+    <user username="dev" password="dev" groups="g_dev"/>
 
     <role name="r_read" permissions="READ"/>
     <group name="g_read" roles="r_read"/>

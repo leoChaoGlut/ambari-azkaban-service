@@ -20,7 +20,8 @@ config = Script.get_config()
 
 azkaban_web_properties = config['configurations']['azkaban-web.properties']
 azkaban_executor_properties = config['configurations']['azkaban-executor.properties']
-azkaban_users_xml = config['configurations']['azkaban-users.xml']
+azkaban_users = config['configurations']['azkaban-users']
+azkaban_db = config['configurations']['azkaban-db']
 global_properties = config['configurations']['global.properties']
 log4j_properties = config['configurations']['log4j.properties']
 

@@ -14,7 +14,6 @@
         "url": "%@://%@:%@",
         "port": {
           "http_property": "jetty.port",
-          "http_default_property": 10101,
           "regex": "^(\\d+)$",
           "site": "azkaban-web.properties"
         }

@@ -14,18 +14,29 @@
 
 import os.path as path
 
-from common import AZKABAN_WEB_URL, AZKABAN_NAME, AZKABAN_HOME, AZKABAN_CONF
-from resource_management.core.exceptions import ExecutionFailed
+from common import AZKABAN_DB_URL, AZKABAN_WEB_URL, AZKABAN_NAME, AZKABAN_HOME, AZKABAN_CONF, AZKABAN_SQL
+from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
 from resource_management.core.resources.system import Execute
 from resource_management.libraries.script.script import Script
 
 
 class WebServer(Script):
     def install(self, env):
-        from params import java_home
+        from params import java_home, azkaban_db
         Execute('wget --no-check-certificate {0}  -O /tmp/{1}'.format(AZKABAN_WEB_URL, AZKABAN_NAME))
+        Execute('wget --no-check-certificate {0}  -O /tmp/{1}'.format(AZKABAN_DB_URL, AZKABAN_SQL))
         Execute(
-            'mkdir -p {0} {1} || echo "whatever"'.format(
+            'mysql -h{0} -P{1} -D{2} -u{3} -p{4} < {5}'.format(
+                azkaban_db['mysql.host'],
+                azkaban_db['mysql.port'],
+                azkaban_db['mysql.database'],
+                azkaban_db['mysql.user'],
+                azkaban_db['mysql.password'],
+                '/tmp/{0}'.format(AZKABAN_SQL),
+            )
+        )
+        Execute(
+            'mkdir -p {0} {1} {2} || echo "whatever"'.format(
                 AZKABAN_HOME + '/conf',
                 AZKABAN_HOME + '/extlib',
                 AZKABAN_HOME + '/plugins/jobtypes',
@@ -51,18 +62,28 @@ class WebServer(Script):
     def status(self, env):
         try:
             Execute(
-                'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-web-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 1;fi `')
+                'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-web-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
+            )
         except ExecutionFailed as ef:
-            raise ef
+            if ef.code == 3:
+                raise ComponentIsNotRunning("ComponentIsNotRunning")
+            else:
+                raise ef
 
     def configure(self, env):
-        from params import azkaban_web_properties, azkaban_users_xml, global_properties, log4j_properties
+        from params import azkaban_db, azkaban_web_properties, azkaban_users, global_properties, log4j_properties
+        key_val_template = '{0}={1}\n'
 
         with open(path.join(AZKABAN_CONF, 'azkaban.properties'), 'w') as f:
+            for key, value in azkaban_db.iteritems():
+                f.write(key_val_template.format(key, value))
+            for key, value in azkaban_web_properties.iteritems():
+                if key != 'content':
+                    f.write(key_val_template.format(key, value))
             f.write(azkaban_web_properties['content'])
 
         with open(path.join(AZKABAN_CONF, 'azkaban-users.xml'), 'w') as f:
-            f.write(azkaban_users_xml['content'])
+            f.write(str(azkaban_users['content']))
 
         with open(path.join(AZKABAN_CONF, 'global.properties'), 'w') as f:
             f.write(global_properties['content'])

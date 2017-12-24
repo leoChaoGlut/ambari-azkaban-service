@@ -16,16 +16,34 @@
 -->
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
+
     <property>
-        <name>content</name>
-        <display-name>global.properties template</display-name>
-        <description>Custom global.properties</description>
-        <value>#</value>
-        <value-attributes>
-            <type>content</type>
-            <show-property-name>false</show-property-name>
-        </value-attributes>
-        <on-ambari-upgrade add="true"/>
+        <name>database.type</name>
+        <value>mysql</value>
+    </property>
+    <property>
+        <name>mysql.host</name>
+        <value>fp-bd5</value>
+    </property>
+    <property>
+        <name>mysql.port</name>
+        <value>3306</value>
+    </property>
+    <property>
+        <name>mysql.database</name>
+        <value>azkaban</value>
+    </property>
+    <property>
+        <name>mysql.user</name>
+        <value>azkaban</value>
+    </property>
+    <property>
+        <name>mysql.password</name>
+        <value>azkaban</value>
+    </property>
+    <property>
+        <name>mysql.numconnections</name>
+        <value>100</value>
     </property>
 
 </configuration>
