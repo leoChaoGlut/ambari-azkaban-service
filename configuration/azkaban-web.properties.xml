@@ -43,11 +43,6 @@ jetty.use.ssl=false
 jetty.maxThreads=25
 #jetty.port=10101
 #
-# Azkaban Executor settings
-executor.maxThreads=50
-executor.port=12321
-executor.flow.threads=30
-#
 azkaban.use.multiple.executors=true
 azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
 azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1

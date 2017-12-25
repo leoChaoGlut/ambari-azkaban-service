@@ -45,8 +45,12 @@ class ExecutorServer(Script):
         Execute('cd {0} && bin/azkaban-executor-shutdown.sh'.format(AZKABAN_HOME))
 
     def start(self, env):
+        from params import azkaban_executor_properties
         self.configure(env)
         Execute('cd {0} && bin/azkaban-executor-start.sh'.format(AZKABAN_HOME))
+        Execute(
+            'curl http://localhost:{0}/executor?action=activate'.format(azkaban_executor_properties['executor.port'])
+        )
 
     def status(self, env):
         try:
@@ -66,6 +70,9 @@ class ExecutorServer(Script):
         with open(path.join(AZKABAN_CONF, 'azkaban.properties'), 'w') as f:
             for key, value in azkaban_db.iteritems():
                 f.write(key_val_template.format(key, value))
+            for key, value in azkaban_executor_properties.iteritems():
+                if key != 'content':
+                    f.write(key_val_template.format(key, value))
             f.write(azkaban_executor_properties['content'])
 
         with open(path.join(AZKABAN_CONF, 'log4j.properties'), 'w') as f:

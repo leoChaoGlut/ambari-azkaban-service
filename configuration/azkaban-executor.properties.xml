@@ -17,6 +17,11 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
     <property>
+        <name>executor.port</name>
+        <value>12321</value>
+    </property>
+
+    <property>
         <name>content</name>
         <display-name>azkaban.properties template</display-name>
         <description>Custom azkaban.properties</description>
@@ -25,15 +30,7 @@ azkaban.jobtype.plugin.dir=plugins/jobtypes
 #
 # Azkaban Executor settings
 executor.maxThreads=50
-executor.port=12321
 executor.flow.threads=30
-#
-azkaban.use.multiple.executors=true
-azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
-azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
-azkaban.executorselector.comparator.Memory=1
-azkaban.executorselector.comparator.LastDispatched=1
-azkaban.executorselector.comparator.CpuUsage=1
         </value>
         <value-attributes>
             <type>content</type>
