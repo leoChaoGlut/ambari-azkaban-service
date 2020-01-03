@@ -17,46 +17,162 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
 
+    <!--    # Azkaban Personalization Settings-->
+    <property>
+        <name>azkaban.name</name>
+        <value>azkb</value>
+    </property>
+    <property>
+        <name>azkaban.label</name>
+        <value>prod</value>
+    </property>
+    <property>
+        <name>azkaban.color</name>
+        <value>#FF3601</value>
+    </property>
+    <property>
+        <name>azkaban.default.servlet.path</name>
+        <value>/index</value>
+    </property>
+    <property>
+        <name>web.resource.dir</name>
+        <value>web/</value>
+    </property>
+    <property>
+        <name>default.timezone.id</name>
+        <value>Asia/Shanghai</value>
+    </property>
+    <!--    # Azkaban UserManager class-->
+    <property>
+        <name>user.manager.class</name>
+        <value>azkaban.user.XmlUserManager</value>
+    </property>
+    <property>
+        <name>user.manager.xml.file</name>
+        <value>conf/azkaban-users.xml</value>
+    </property>
+    <!--    # Loader for projects-->
+    <property>
+        <name>executor.global.properties</name>
+        <value>conf/global.properties</value>
+    </property>
+    <property>
+        <name>azkaban.project.dir</name>
+        <value>projects</value>
+    </property>
+    <!--    # Velocity dev mode-->
+    <property>
+        <name>velocity.dev.mode</name>
+        <value>false</value>
+    </property>
+    <!--    # Azkaban Jetty server properties.-->
+    <property>
+        <name>jetty.use.ssl</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>jetty.maxThreads</name>
+        <value>25</value>
+    </property>
     <property>
         <name>jetty.port</name>
-        <value>10101</value>
+        <value>10200</value>
     </property>
-
+    <!--    # Azkaban Executor settings-->
+    <!--    # mail settings-->
     <property>
-        <name>content</name>
-        <display-name>azkaban.properties template</display-name>
-        <description>Custom azkaban.properties</description>
-        <value>
-#
-Execute.as.user=false
-# Azkaban Personalization Settings
-azkaban.name=Test Env
-azkaban.label=localhost
-azkaban.color=#FF3601
-azkaban.default.servlet.path=/index
-web.resource.dir=web/
-#
-user.manager.class=azkaban.user.XmlUserManager
-user.manager.xml.file=conf/azkaban-users.xml
-#
-jetty.use.ssl=false
-jetty.maxThreads=25
-#jetty.port=10101
-#
-azkaban.use.multiple.executors=true
-azkaban.executorselector.filters=StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus
-azkaban.executorselector.comparator.NumberOfAssignedFlowComparator=1
-azkaban.executorselector.comparator.Memory=1
-azkaban.executorselector.comparator.LastDispatched=1
-azkaban.executorselector.comparator.CpuUsage=1
-#
-azkaban.jobtype.plugin.dir=plugins/jobtypes
-        </value>
-        <value-attributes>
-            <type>content</type>
-            <show-property-name>false</show-property-name>
-        </value-attributes>
-        <on-ambari-upgrade add="true"/>
+        <name>mail.sender</name>
+        <value></value>
+    </property>
+    <property>
+        <name>mail.host</name>
+        <value></value>
+    </property>
+    <!--    # User facing web server configurations used to construct the user facing server URLs. They are useful when there is a reverse proxy between Azkaban web servers and users.-->
+    <!--    # enduser -> myazkabanhost:443 -> proxy -> localhost:8081-->
+    <!--    # when this parameters set then these parameters are used to generate email links.-->
+    <!--    # if these parameters are not set then jetty.hostname, and jetty.port(if ssl configured jetty.ssl.port) are used.-->
+    <!--    # azkaban.webserver.external_hostname=myazkabanhost.com-->
+    <!--    # azkaban.webserver.external_ssl_port=443-->
+    <!--    # azkaban.webserver.external_port=8081-->
+    <property>
+        <name>job.failure.email</name>
+        <value></value>
+    </property>
+    <property>
+        <name>job.success.email</name>
+        <value></value>
+    </property>
+    <property>
+        <name>lockdown.create.projects</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>cache.directory</name>
+        <value>cache</value>
+    </property>
+    <!--    # JMX stats-->
+    <property>
+        <name>jetty.connector.stats</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>executor.connector.stats</name>
+        <value>true</value>
+    </property>
+    <!--    # Azkaban mysql settings by default. Users should configure their own username and password.-->
+    <property>
+        <name>database.type</name>
+        <value>mysql</value>
+    </property>
+    <property>
+        <name>mysql.port</name>
+        <value>3306</value>
+    </property>
+    <property>
+        <name>mysql.host</name>
+        <value>hdp00</value>
+    </property>
+    <property>
+        <name>mysql.database</name>
+        <value>azkaban</value>
+    </property>
+    <property>
+        <name>mysql.user</name>
+        <value>root</value>
+    </property>
+    <property>
+        <name>mysql.password</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>mysql.numconnections</name>
+        <value>100</value>
+    </property>
+    <!--    #Multiple Executor-->
+    <property>
+        <name>azkaban.use.multiple.executors</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.filters</name>
+        <value>StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.NumberOfAssignedFlowComparator</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.Memory</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.LastDispatched</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.CpuUsage</name>
+        <value>1</value>
     </property>
 
 </configuration>
