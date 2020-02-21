@@ -19,12 +19,16 @@
 
     <!--    # Azkaban Personalization Settings-->
     <property>
+        <name>java_home</name>
+        <value>/usr/local/jdk1.8.0_171</value>
+    </property>
+    <property>
         <name>azkaban.name</name>
-        <value>azkb</value>
+        <value>azkaban</value>
     </property>
     <property>
         <name>azkaban.label</name>
-        <value>prod</value>
+        <value>test</value>
     </property>
     <property>
         <name>azkaban.color</name>
@@ -82,16 +86,16 @@
     <!--    # Azkaban Executor settings-->
     <property>
         <name>azkaban.webserver.url</name>
-        <value>http://hdp00:10200</value>
+        <value>http://localhost:10200</value>
     </property>
     <!--    # mail settings-->
     <property>
         <name>mail.sender</name>
-        <value></value>
+        <value>azkaban@email.com</value>
     </property>
     <property>
         <name>mail.host</name>
-        <value></value>
+        <value>azkaban@email.com</value>
     </property>
     <!--    # User facing web server configurations used to construct the user facing server URLs. They are useful when there is a reverse proxy between Azkaban web servers and users.-->
     <!--    # enduser -> myazkabanhost:443 -> proxy -> localhost:8081-->
@@ -102,11 +106,11 @@
     <!--    # azkaban.webserver.external_port=8081-->
     <property>
         <name>job.failure.email</name>
-        <value></value>
+        <value>azkaban@email.com</value>
     </property>
     <property>
         <name>job.success.email</name>
-        <value></value>
+        <value>azkaban@email.com</value>
     </property>
     <property>
         <name>lockdown.create.projects</name>
@@ -141,7 +145,7 @@
     </property>
     <property>
         <name>mysql.host</name>
-        <value>hdp00</value>
+        <value>localhost</value>
     </property>
     <property>
         <name>mysql.database</name>
@@ -149,11 +153,11 @@
     </property>
     <property>
         <name>mysql.user</name>
-        <value>root</value>
+        <value>azkaban</value>
     </property>
     <property>
         <name>mysql.password</name>
-        <value>1</value>
+        <value>azkaban</value>
     </property>
     <property>
         <name>mysql.numconnections</name>
@@ -168,5 +172,33 @@
         <name>executor.flow.threads</name>
         <value>30</value>
     </property>
-
+    <property>
+        <name>executor.port</name>
+        <value>12321</value>
+    </property>
+     <!--    #Multiple Executor-->
+    <property>
+        <name>azkaban.use.multiple.executors</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.filters</name>
+        <value>StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.NumberOfAssignedFlowComparator</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.Memory</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.LastDispatched</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>azkaban.executorselector.comparator.CpuUsage</name>
+        <value>1</value>
+    </property>
 </configuration>

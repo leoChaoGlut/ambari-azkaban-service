@@ -22,7 +22,9 @@ from resource_management.libraries.script.script import Script
 
 class WebServer(Script):
     def install(self, env):
-        from params import java_home, azkaban_db
+        #from params import java_home, azkaban_db
+        from params import  azkaban_db
+        java_home='/usr/local/jdk1.8.0_171'
         Execute('wget --no-check-certificate {0}  -O /tmp/{1}'.format(AZKABAN_WEB_URL, AZKABAN_NAME))
         Execute('wget --no-check-certificate {0}  -O /tmp/{1}'.format(AZKABAN_DB_URL, AZKABAN_SQL))
         Execute(
@@ -53,14 +55,16 @@ class WebServer(Script):
         self.configure(env)
 
     def stop(self, env):
-        Execute('cd {0} && bin/azkaban-web-shutdown.sh'.format(AZKABAN_HOME))
+        self.configure(env)
+    Execute('cd {0} && bin/shutdown-web.sh'.format(AZKABAN_HOME))
 
     def start(self, env):
         self.configure(env)
-        Execute('cd {0} && bin/azkaban-web-start.sh'.format(AZKABAN_HOME))
+        Execute('cd {0} && bin/start-web.sh'.format(AZKABAN_HOME))
 
     def status(self, env):
         try:
+        self.configure(env)
             Execute(
                 'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-web-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
             )
@@ -80,16 +84,23 @@ class WebServer(Script):
             for key, value in azkaban_web_properties.iteritems():
                 if key != 'content':
                     f.write(key_val_template.format(key, value))
-            f.write(azkaban_web_properties['content'])
+            #f.write(azkaban_web_properties['content'])
+        if azkaban_web_properties.has_key('content'):
+                f.write(str(azkaban_web_properties['content']))
 
         with open(path.join(AZKABAN_CONF, 'azkaban-users.xml'), 'w') as f:
+            if azkaban_users.has_key('content'):
             f.write(str(azkaban_users['content']))
 
         with open(path.join(AZKABAN_CONF, 'global.properties'), 'w') as f:
-            f.write(global_properties['content'])
+            #f.write(global_properties['content'])
+            if global_properties.has_key('content'):
+                f.write(str(global_properties['content']))
 
         with open(path.join(AZKABAN_CONF, 'log4j.properties'), 'w') as f:
-            f.write(log4j_properties['content'])
+            #f.write(log4j_properties['content'])
+            if log4j_properties.has_key('content'):
+                f.write(str(log4j_properties['content']))
 
 
 if __name__ == '__main__':
