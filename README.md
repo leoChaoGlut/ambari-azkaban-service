@@ -12,7 +12,7 @@ Ambari 集成 Azkaban
     - download.ini
     - params.py
 
-# Dealoy
+# Deploy
 
 - 1台服务器同时安装web、executor（需要修改azkaban的脚本，同时启动有冲突）
 - web、executor分别部署在多台服务器（无需关心脚本）
