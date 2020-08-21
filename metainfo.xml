@@ -24,7 +24,7 @@
                 the ordering through job dependencies and provides an easy to use web user interface to maintain and
                 track your workflows.
             </comment>
-            <version>3.81.4</version>
+            <version>3.90.0</version>
             <quickLinksConfigurations>
                 <quickLinksConfiguration>
                     <fileName>quicklinks.json</fileName>
