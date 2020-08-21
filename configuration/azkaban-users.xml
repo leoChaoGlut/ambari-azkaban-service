@@ -23,22 +23,13 @@
         <value>
             <![CDATA[
 <azkaban-users>
+  <user groups="azkaban" password="azkaban" roles="admin" username="azkaban"/>
+  <user password="metrics" roles="metrics" username="metrics"/>
 
-    <role name="r_admin" permissions="ADMIN"/>
-    <group name="g_admin" roles="r_admin"/>
-    <user username="admin" password="admin" groups="g_admin"/>
-
-    <role name="r_dev" permissions="READ,WRITE,CREATEPROJECTS"/>
-    <group name="g_dev" roles="r_dev"/>
-    <user username="dev" password="dev" groups="g_dev"/>
-
-    <role name="r_read" permissions="READ"/>
-    <group name="g_read" roles="r_read"/>
-
-    <role name="r_metrics" permissions="METRICS"/>
-    <user username="metrics" password="metrics" roles="r_admin"/>
-
+  <role name="admin" permissions="ADMIN"/>
+  <role name="metrics" permissions="METRICS"/>
 </azkaban-users>
+
             ]]>
         </value>
         <value-attributes>

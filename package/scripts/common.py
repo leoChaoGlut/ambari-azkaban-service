@@ -20,7 +20,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config = ConfigParser.ConfigParser()
 config.readfp(open(os.path.join(script_dir, 'download.ini')))
 
-AZKABAN_HOME = '/usr/hdp/current/azkaban'
+AZKABAN_HOME = '/data/azkaban'
 AZKABAN_NAME = 'azkaban'
 AZKABAN_SQL = 'azkaban.sql'
 AZKABAN_WEB_URL = config.get('download', 'azkaban_web_url')
