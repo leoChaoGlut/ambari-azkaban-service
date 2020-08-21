@@ -17,19 +17,19 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
 
-    <property require-input="true">
+    <property>
         <name>mail.sender</name>
         <value></value>
     </property>
-    <property require-input="true">
+    <property>
         <name>mail.host</name>
         <value></value>
     </property>
-    <property require-input="true">
+    <property>
         <name>mail.user</name>
         <value></value>
     </property>
-    <property require-input="true">
+    <property>
         <name>mail.password</name>
         <value></value>/
     </property>
