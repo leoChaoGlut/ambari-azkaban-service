@@ -54,31 +54,30 @@ class WebServer(Script):
             else:
                 raise ef
 
+    def configure(self, env):
+        from params import azkaban_common, azkaban_web_properties, azkaban_users, global_properties, log4j_properties
+        key_val_template = '{0}={1}\n'
 
-def configure(self, env):
-    from params import azkaban_common, azkaban_web_properties, azkaban_users, global_properties, log4j_properties
-    key_val_template = '{0}={1}\n'
-
-    with open(path.join(azkabanConfPath, 'azkaban.properties'), 'w') as f:
-        for key, value in azkaban_common.iteritems():
-            f.write(key_val_template.format(key, value))
-        for key, value in azkaban_web_properties.iteritems():
-            if key != 'content':
+        with open(path.join(azkabanConfPath, 'azkaban.properties'), 'w') as f:
+            for key, value in azkaban_common.iteritems():
                 f.write(key_val_template.format(key, value))
-        if azkaban_web_properties.has_key('content'):
-            f.write(str(azkaban_web_properties['content']))
+            for key, value in azkaban_web_properties.iteritems():
+                if key != 'content':
+                    f.write(key_val_template.format(key, value))
+            if azkaban_web_properties.has_key('content'):
+                f.write(str(azkaban_web_properties['content']))
 
-    with open(path.join(azkabanConfPath, 'azkaban-users.xml'), 'w') as f:
-        if azkaban_users.has_key('content'):
-            f.write(str(azkaban_users['content']))
+        with open(path.join(azkabanConfPath, 'azkaban-users.xml'), 'w') as f:
+            if azkaban_users.has_key('content'):
+                f.write(str(azkaban_users['content']))
 
-    with open(path.join(azkabanConfPath, 'global.properties'), 'w') as f:
-        if global_properties.has_key('content'):
-            f.write(str(global_properties['content']))
+        with open(path.join(azkabanConfPath, 'global.properties'), 'w') as f:
+            if global_properties.has_key('content'):
+                f.write(str(global_properties['content']))
 
-    with open(path.join(azkabanConfPath, 'log4j.properties'), 'w') as f:
-        if log4j_properties.has_key('content'):
-            f.write(str(log4j_properties['content']))
+        with open(path.join(azkabanConfPath, 'log4j.properties'), 'w') as f:
+            if log4j_properties.has_key('content'):
+                f.write(str(log4j_properties['content']))
 
 
 if __name__ == '__main__':

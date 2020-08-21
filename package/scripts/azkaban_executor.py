@@ -55,35 +55,33 @@ class ExecutorServer(Script):
             else:
                 time.sleep(3)
 
+    def status(self, env):
+        try:
+            Execute(
+                'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-exec-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
+            )
+        except ExecutionFailed as ef:
+            if ef.code == 3:
+                raise ComponentIsNotRunning("ComponentIsNotRunning")
+            else:
+                raise ef
 
-def status(self, env):
-    try:
-        Execute(
-            'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-exec-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
-        )
-    except ExecutionFailed as ef:
-        if ef.code == 3:
-            raise ComponentIsNotRunning("ComponentIsNotRunning")
-        else:
-            raise ef
+    def configure(self, env):
+        from params import azkaban_executor_properties, log4j_properties, azkaban_common
+        key_val_template = '{0}={1}\n'
 
-
-def configure(self, env):
-    from params import azkaban_executor_properties, log4j_properties, azkaban_common
-    key_val_template = '{0}={1}\n'
-
-    with open(path.join(azkabanConfPath + "/conf", 'azkaban.properties'), 'w') as f:
-        for key, value in azkaban_common.iteritems():
-            f.write(key_val_template.format(key, value))
-        for key, value in azkaban_executor_properties.iteritems():
-            if key != 'content':
+        with open(path.join(azkabanConfPath + "/conf", 'azkaban.properties'), 'w') as f:
+            for key, value in azkaban_common.iteritems():
                 f.write(key_val_template.format(key, value))
-        if azkaban_executor_properties.has_key('content'):
-            f.write(str(azkaban_executor_properties['content']))
+            for key, value in azkaban_executor_properties.iteritems():
+                if key != 'content':
+                    f.write(key_val_template.format(key, value))
+            if azkaban_executor_properties.has_key('content'):
+                f.write(str(azkaban_executor_properties['content']))
 
-    with open(path.join(azkabanConfPath, 'log4j.properties'), 'w') as f:
-        if log4j_properties.has_key('content'):
-            f.write(str(log4j_properties['content']))
+        with open(path.join(azkabanConfPath, 'log4j.properties'), 'w') as f:
+            if log4j_properties.has_key('content'):
+                f.write(str(log4j_properties['content']))
 
 
 if __name__ == '__main__':
