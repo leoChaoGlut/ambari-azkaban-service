@@ -14,8 +14,8 @@
 
 import os.path as path
 
-from common import azkabanHome, azkabanWebTarUrl, azkabanSqlUrl, azkabanWebTarName, \
-    azkabanSqlName, azkabanConfPath
+from common import azkabanHome, azkabanWebTarUrl, azkabanWebTarName, \
+    azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
 from resource_management.core.resources.system import Execute
 from resource_management.libraries.script.script import Script
@@ -23,21 +23,6 @@ from resource_management.libraries.script.script import Script
 
 class WebServer(Script):
     def install(self, env):
-        from params import azkaban_common
-        tmpAzkabanSqlPath = '/tmp' + azkabanSqlName
-        Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanSqlUrl, tmpAzkabanSqlPath))
-
-        Execute(
-            'mysql -h{0} -P{1} -D{2} -u{3} -p{4} < {5}'.format(
-                azkaban_common['mysql.host'],
-                azkaban_common['mysql.port'],
-                azkaban_common['mysql.database'],
-                azkaban_common['mysql.user'],
-                azkaban_common['mysql.password'],
-                tmpAzkabanSqlPath,
-            )
-        )
-
         tmpAzkabanWebTarPath = '/tmp/' + azkabanWebTarName
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanWebTarUrl, tmpAzkabanWebTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanWebTarPath, azkabanHome))

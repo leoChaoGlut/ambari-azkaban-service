@@ -25,8 +25,6 @@ azkabanConfPath = azkabanHome + '/conf'
 
 azkabanWebTarUrl = config.get('download', 'azkaban_web_tar_url')
 azkabanExecTarUrl = config.get('download', 'azkaban_executor_tar_url')
-azkabanSqlUrl = config.get('download', 'azkaban_sql_url')
 
 azkabanWebTarName = azkabanWebTarUrl.split('/')[-1]
 azkabanExecTarName = azkabanExecTarUrl.split('/')[-1]
-azkabanSqlName = azkabanSqlUrl.split('/')[-1]

@@ -16,6 +16,7 @@ Ambari 集成 Azkaban
 
 - 1台服务器同时安装web、executor（需要修改azkaban的脚本，同时启动有冲突）
 - web、executor分别部署在多台服务器（无需关心脚本）
+- 需要按azkaban官网先创建数据库,并执行create-all-sql-3.38.0.sql先创建好表
 
 # Usage
 
