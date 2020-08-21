@@ -20,10 +20,13 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config = ConfigParser.ConfigParser()
 config.readfp(open(os.path.join(script_dir, 'download.ini')))
 
-AZKABAN_HOME = '/data/azkaban'
-AZKABAN_NAME = 'azkaban'
-AZKABAN_SQL = 'azkaban.sql'
-AZKABAN_WEB_URL = config.get('download', 'azkaban_web_url')
-AZKABAN_EXECUTOR_URL = config.get('download', 'azkaban_executor_url')
-AZKABAN_DB_URL = config.get('download', 'azkaban_db_url')
-AZKABAN_CONF = AZKABAN_HOME + '/conf'
+azkabanHome = '/data/azkaban'
+azkabanConfPath = azkabanHome + '/conf'
+
+azkabanWebTarUrl = config.get('download', 'azkaban_web_tar_url')
+azkabanExecTarUrl = config.get('download', 'azkaban_executor_tar_url')
+azkabanSqlUrl = config.get('download', 'azkaban_sql_url')
+
+azkabanWebTarName = azkabanWebTarUrl.split('/')[-1]
+azkabanExecTarName = azkabanExecTarUrl.split('/')[-1]
+azkabanSqlName = azkabanSqlUrl.split('/')[-1]

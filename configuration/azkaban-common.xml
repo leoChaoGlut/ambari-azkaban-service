@@ -99,13 +99,13 @@
         <name>database.type</name>
         <value>mysql</value>
     </property>
-    <property>
-        <name>mysql.port</name>
-        <value>3306</value>
-    </property>
     <property require-input="true">
         <name>mysql.host</name>
         <value></value>
+    </property>
+    <property>
+        <name>mysql.port</name>
+        <value>3306</value>
     </property>
     <property>
         <name>mysql.database</name>
