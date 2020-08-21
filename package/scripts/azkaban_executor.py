@@ -70,7 +70,7 @@ class ExecutorServer(Script):
         from params import azkaban_executor_properties, log4j_properties, azkaban_common
         key_val_template = '{0}={1}\n'
 
-        with open(path.join(azkabanConfPath + "/conf", 'azkaban.properties'), 'w') as f:
+        with open(path.join(azkabanConfPath, 'azkaban.properties'), 'w') as f:
             for key, value in azkaban_common.iteritems():
                 f.write(key_val_template.format(key, value))
             for key, value in azkaban_executor_properties.iteritems():
