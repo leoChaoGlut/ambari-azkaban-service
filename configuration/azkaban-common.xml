@@ -103,21 +103,21 @@
         <name>mysql.host</name>
         <value></value>
     </property>
-    <property>
+    <property require-input="true">
         <name>mysql.port</name>
         <value>3306</value>
     </property>
-    <property>
+    <property require-input="true">
         <name>mysql.database</name>
-        <value>azkaban</value>
+        <value></value>
     </property>
-    <property>
+    <property require-input="true">
         <name>mysql.user</name>
-        <value>azkaban</value>
+        <value></value>
     </property>
-    <property>
+    <property require-input="true">
         <name>mysql.password</name>
-        <value>azkaban</value>
+        <value></value>
     </property>
     <property>
         <name>mysql.numconnections</name>
