@@ -17,6 +17,10 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
     <property>
+        <name>executor.port</name>
+        <value>12321</value>
+    </property>
+    <property>
         <name>azkaban.jobtype.plugin.dir</name>
         <value>plugins/jobtypes</value>
     </property>

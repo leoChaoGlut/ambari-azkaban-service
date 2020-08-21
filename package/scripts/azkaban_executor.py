@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os.path as path
-import socket
+import requests
 import time
 
 from common import azkabanHome, azkabanExecTarUrl, azkabanExecTarName, azkabanConfPath
@@ -43,19 +44,29 @@ class ExecutorServer(Script):
     def start(self, env):
         self.configure(env)
         Execute('cd {0} && ./bin/start-exec.sh'.format(azkabanHome))
-        from params import azkaban_common
-        executor_port = int(azkaban_common['jetty.port'])
-        while 1:
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            result = sock.connect_ex(('127.0.0.1', executor_port))
-            sock.close()
-            if result == 0:
-                Execute('curl -G "localhost:{0}/executor?action=activate" && echo'.format(executor_port))
+        from params import azkaban_executor_properties
+        executor_port = int(azkaban_executor_properties['executor.port'])
+        url = 'http://127.0.0.1:{0}/executor?action=ping'.format(executor_port)
+        maxRetryCount = 30
+        retryCount = 0
+        while True:
+            try:
+                resp = requests.get(url)
+                print(resp.text)
+                if json.loads(resp.text)['status'] == 'alive':
+                    print('executor is alive')
+                    Execute('curl -G "localhost:{0}/executor?action=activate" && echo'.format(executor_port))
+                    print('after activate')
+                    break
+            except:
+                print('executor is not alive')
+            time.sleep(1)
+            retryCount += 1
+            if retryCount > maxRetryCount:
                 break
-            else:
-                time.sleep(3)
 
     def status(self, env):
+        # TODO 可优化,和start逻辑一致
         try:
             Execute(
                 'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-exec-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'

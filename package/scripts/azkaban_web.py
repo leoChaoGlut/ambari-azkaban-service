@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import os.path as path
+import requests
+import time
 
 from common import azkabanHome, azkabanWebTarUrl, azkabanWebTarName, \
     azkabanConfPath
@@ -41,7 +43,25 @@ class WebServer(Script):
 
     def start(self, env):
         self.configure(env)
-        Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
+        maxRetryCount = 30
+        retryCount = 0
+        from params import azkaban_common
+        webPort = int(azkaban_common['jetty.port'])
+        url = 'http://127.0.0.1:{0}/status'.format(webPort)
+        while True:
+            Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
+            try:
+                resp = requests.get(url)
+                print(resp.text)
+                if resp.status_code == requests.codes.ok:
+                    print('web is alive')
+                    break
+            except:
+                print('web is not alive')
+            time.sleep(1)
+            retryCount += 1
+            if retryCount > maxRetryCount:
+                break
 
     def status(self, env):
         try:
