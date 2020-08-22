@@ -14,9 +14,9 @@
 
 import json
 import os.path as path
-import requests
 import time
 
+import requests
 from common import azkabanHome, azkabanExecTarUrl, azkabanExecTarName, azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
 from resource_management.core.resources.system import Execute
@@ -25,6 +25,7 @@ from resource_management.libraries.script.script import Script
 
 class ExecutorServer(Script):
     def install(self, env):
+        Execute('pip install requests')
         tmpAzkabanExecTarPath = '/tmp/' + azkabanExecTarName
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanExecTarUrl, tmpAzkabanExecTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanExecTarPath, azkabanHome))

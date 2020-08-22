@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import os.path as path
-import requests
 import time
 
+import requests
 from common import azkabanHome, azkabanWebTarUrl, azkabanWebTarName, \
     azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
@@ -25,6 +25,7 @@ from resource_management.libraries.script.script import Script
 
 class WebServer(Script):
     def install(self, env):
+        Execute('pip install requests')
         tmpAzkabanWebTarPath = '/tmp/' + azkabanWebTarName
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanWebTarUrl, tmpAzkabanWebTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanWebTarPath, azkabanHome))
