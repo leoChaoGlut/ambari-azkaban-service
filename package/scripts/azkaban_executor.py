@@ -16,7 +16,6 @@ import json
 import os.path as path
 import time
 
-import requests
 from common import azkabanHome, azkabanExecTarUrl, azkabanExecTarName, azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
 from resource_management.core.resources.system import Execute
@@ -50,6 +49,7 @@ class ExecutorServer(Script):
         url = 'http://127.0.0.1:{0}/executor?action=ping'.format(executor_port)
         maxRetryCount = 30
         retryCount = 0
+        import requests
         while True:
             try:
                 resp = requests.get(url)

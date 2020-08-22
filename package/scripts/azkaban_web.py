@@ -15,7 +15,6 @@
 import os.path as path
 import time
 
-import requests
 from common import azkabanHome, azkabanWebTarUrl, azkabanWebTarName, \
     azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
@@ -49,6 +48,7 @@ class WebServer(Script):
         from params import azkaban_common
         webPort = int(azkaban_common['jetty.port'])
         url = 'http://127.0.0.1:{0}/status'.format(webPort)
+        import requests
         while True:
             Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
             try:
