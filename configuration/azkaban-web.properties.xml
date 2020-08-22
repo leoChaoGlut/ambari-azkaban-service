@@ -19,19 +19,19 @@
 
     <property>
         <name>mail.sender</name>
-        <value></value>
+        <value>xxx@163.com</value>
     </property>
     <property>
         <name>mail.host</name>
-        <value></value>
+        <value>smtp.163.com</value>
     </property>
     <property>
         <name>mail.user</name>
-        <value></value>
+        <value>xxx@163.com</value>
     </property>
     <property>
         <name>mail.password</name>
-        <value></value>
+        <value>xxx</value>
     </property>
 
 
