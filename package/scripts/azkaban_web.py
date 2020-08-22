@@ -25,6 +25,7 @@ from resource_management.libraries.script.script import Script
 class WebServer(Script):
     def install(self, env):
         Execute('yum install -y python-requests')
+
         tmpAzkabanWebTarPath = '/tmp/' + azkabanWebTarName
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanWebTarUrl, tmpAzkabanWebTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanWebTarPath, azkabanHome))
@@ -63,8 +64,6 @@ class WebServer(Script):
             retryCount += 1
             if retryCount > maxRetryCount:
                 raise Exception('web start failed')
-
-
 
     def status(self, env):
         try:
