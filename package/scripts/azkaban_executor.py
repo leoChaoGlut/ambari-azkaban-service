@@ -24,6 +24,7 @@ from resource_management.libraries.script.script import Script
 
 class ExecutorServer(Script):
     def install(self, env):
+        Execute('yum install -y python-requests')
         tmpAzkabanExecTarPath = '/tmp/' + azkabanExecTarName
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanExecTarUrl, tmpAzkabanExecTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanExecTarPath, azkabanHome))
@@ -41,7 +42,6 @@ class ExecutorServer(Script):
         Execute('cd {0} && ./bin/shutdown-exec.sh'.format(azkabanHome))
 
     def start(self, env):
-        Execute('pip install requests')
         self.configure(env)
         Execute('cd {0} && ./bin/start-exec.sh'.format(azkabanHome))
         from params import azkaban_executor_properties
@@ -64,7 +64,7 @@ class ExecutorServer(Script):
             time.sleep(1)
             retryCount += 1
             if retryCount > maxRetryCount:
-                break
+                raise Exception('web start failed')
 
     def status(self, env):
         # TODO 可优化,和start逻辑一致
