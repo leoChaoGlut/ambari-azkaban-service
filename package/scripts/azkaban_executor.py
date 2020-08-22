@@ -27,6 +27,7 @@ class ExecutorServer(Script):
         Execute('yum install -y python-requests')
 
         tmpAzkabanExecTarPath = '/tmp/' + azkabanExecTarName
+        Execute('mkdir -p {0}'.format(azkabanHome))
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanExecTarUrl, tmpAzkabanExecTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanExecTarPath, azkabanHome))
 
