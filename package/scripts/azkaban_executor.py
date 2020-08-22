@@ -49,7 +49,7 @@ class ExecutorServer(Script):
         from params import azkaban_executor_properties
         executor_port = int(azkaban_executor_properties['executor.port'])
         url = 'http://127.0.0.1:{0}/executor?action=ping'.format(executor_port)
-        maxRetryCount = 30
+        maxRetryCount = 10
         retryCount = 0
         import requests
         while True:

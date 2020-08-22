@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import json
 import os.path as path
 import time
 
@@ -45,34 +46,31 @@ class WebServer(Script):
 
     def start(self, env):
         self.configure(env)
-        maxRetryCountForStartWeb = 30
-        retryCountForStartWeb = 0
 
-        maxRetryCountForWebStatusCheck = 5
-        retryCountForStartWebStatusCheck = 0
-        from params import azkaban_common
-        webPort = int(azkaban_common['jetty.port'])
-        url = 'http://127.0.0.1:{0}/status'.format(webPort)
+        maxRetryCount = 10
+        retryCount = 0
+
+        from params import host_info, azkaban_executor_properties
+        executor_port = int(azkaban_executor_properties['executor.port'])
+        execHosts = host_info['azkaban_executor_hosts']
+        urlTmpl = 'http://{0}:{1}/executor?action=getStatus'
         import requests
         while True:
-            Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
-            try:
-                while True:
-                    self.status(env)
+            for execHost in execHosts:
+                try:
+                    url = urlTmpl.format(execHost, executor_port)
+                    print(url)
                     resp = requests.get(url)
                     print(resp.text)
-                    if resp.status_code == requests.codes.ok:
-                        print('web is alive')
+                    if json.loads(resp.text)['isActive'] == 'true':
+                        Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
                         return
-                    time.sleep(1)
-                    retryCountForStartWebStatusCheck += 1
-                    if retryCountForStartWebStatusCheck > maxRetryCountForWebStatusCheck:
-                        raise Exception('web is not started')
-            except:
-                print('web is not alive')
+                except:
+                    print('web is not alive')
+                time.sleep(0.5)
             time.sleep(1)
-            retryCountForStartWeb += 1
-            if retryCountForStartWeb > maxRetryCountForStartWeb:
+            retryCount += 1
+            if retryCount > maxRetryCount:
                 raise Exception('web start failed')
 
     def status(self, env):
