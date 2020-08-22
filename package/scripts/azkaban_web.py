@@ -45,8 +45,11 @@ class WebServer(Script):
 
     def start(self, env):
         self.configure(env)
-        maxRetryCount = 30
-        retryCount = 0
+        maxRetryCountForStartWeb = 30
+        retryCountForStartWeb = 0
+
+        maxRetryCountForWebStatusCheck = 5
+        retryCountForStartWebStatusCheck = 0
         from params import azkaban_common
         webPort = int(azkaban_common['jetty.port'])
         url = 'http://127.0.0.1:{0}/status'.format(webPort)
@@ -54,16 +57,22 @@ class WebServer(Script):
         while True:
             Execute('cd {0} && ./bin/start-web.sh'.format(azkabanHome))
             try:
-                resp = requests.get(url)
-                print(resp.text)
-                if resp.status_code == requests.codes.ok:
-                    print('web is alive')
-                    break
+                while True:
+                    self.status(env)
+                    resp = requests.get(url)
+                    print(resp.text)
+                    if resp.status_code == requests.codes.ok:
+                        print('web is alive')
+                        return
+                    time.sleep(1)
+                    retryCountForStartWebStatusCheck += 1
+                    if retryCountForStartWebStatusCheck > maxRetryCountForWebStatusCheck:
+                        raise Exception('web is not started')
             except:
                 print('web is not alive')
             time.sleep(1)
-            retryCount += 1
-            if retryCount > maxRetryCount:
+            retryCountForStartWeb += 1
+            if retryCountForStartWeb > maxRetryCountForStartWeb:
                 raise Exception('web start failed')
 
     def status(self, env):
