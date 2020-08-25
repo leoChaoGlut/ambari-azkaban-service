@@ -41,7 +41,7 @@
                     <commandScript>
                         <script>scripts/azkaban_web.py</script>
                         <scriptType>PYTHON</scriptType>
-                        <timeout>1200</timeout>
+                        <timeout>300</timeout>
                     </commandScript>
                 </component>
 
