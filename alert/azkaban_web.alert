@@ -22,7 +22,7 @@ curl -u ${username}:${password} -H "X-Requested-By: ambari" -X POST http://${amb
         }
       },
       "type": "PORT",
-      "uri": "{{azkaban-web.properties/jetty.port}}"
+      "uri": "{{azkaban-common/jetty.port}}"
     }
   }
 }'
