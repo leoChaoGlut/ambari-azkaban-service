@@ -60,12 +60,12 @@
             </components>
 
             <configuration-dependencies>
-                <config-type>azkaban-common.xml</config-type>
-                <config-type>azkaban-executor.properties.xml</config-type>
-                <config-type>azkaban-users.xml</config-type>
-                <config-type>azkaban-web.properties.xml</config-type>
-                <config-type>global.properties.xml</config-type>
-                <config-type>log4j.properties.xml</config-type>
+                <config-type>azkaban-common</config-type>
+                <config-type>azkaban-executor.properties</config-type>
+                <config-type>azkaban-users</config-type>
+                <config-type>azkaban-web.properties</config-type>
+                <config-type>global.properties</config-type>
+                <config-type>log4j.properties</config-type>
             </configuration-dependencies>
 
         </service>
