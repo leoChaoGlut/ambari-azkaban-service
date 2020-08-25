@@ -26,3 +26,32 @@ curl -u ${username}:${password} -H "X-Requested-By: ambari" -X POST http://${amb
     }
   }
 }'
+
+curl -u admin:admin -H "X-Requested-By: ambari" -X PUT http://mgmt01:8080/api/v1/clusters/DMP/alert_definitions/251 -d '{
+  "AlertDefinition": {
+    "service_name": "AZKABAN",
+    "component_name": "AZKABAN_WEB",
+    "enabled": true,
+    "interval": 1,
+    "label": "AZKABAN_WEB_HEALTH_CHECK",
+    "name": "AZKABAN_WEB_HEALTH_CHECK",
+    "scope": "ANY",
+    "source": {
+      "reporting": {
+        "ok": {
+          "text": "TCP OK - {0:.4f} response on port {1}"
+        },
+        "warning": {
+          "text": "TCP OK - {0:.3f}s response on port {1}",
+          "value": 1.5
+        },
+        "critical": {
+          "text": "Connection failed: {0} on host {1}:{2}",
+          "value": 5.0
+        }
+      },
+      "type": "PORT",
+      "uri": "{{azkaban-common/jetty.port}}"
+    }
+  }
+}'
