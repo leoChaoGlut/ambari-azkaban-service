@@ -38,6 +38,7 @@
                     <category>MASTER</category>
                     <cardinality>1</cardinality>
                     <versionAdvertised>true</versionAdvertised>
+                    <recovery_enabled>true</recovery_enabled>
                     <commandScript>
                         <script>scripts/azkaban_web.py</script>
                         <scriptType>PYTHON</scriptType>
@@ -51,6 +52,7 @@
                     <category>SLAVE</category>
                     <cardinality>0+</cardinality>
                     <versionAdvertised>true</versionAdvertised>
+                    <recovery_enabled>true</recovery_enabled>
                     <commandScript>
                         <script>scripts/azkaban_executor.py</script>
                         <scriptType>PYTHON</scriptType>
