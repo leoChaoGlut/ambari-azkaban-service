@@ -21,4 +21,22 @@
 -->
 <configuration>
 
+    <property>
+        <name>content</name>
+        <display-name>azkaban-users.xml template</display-name>
+        <description>Custom azkaban-users.xml</description>
+        <value>
+            <![CDATA[
+retries=10
+retry.backoff=10000
+failure.emails=
+            ]]>
+        </value>
+        <value-attributes>
+            <type>content</type>
+            <show-property-name>false</show-property-name>
+        </value-attributes>
+        <on-ambari-upgrade add="true"/>
+    </property>
+
 </configuration>

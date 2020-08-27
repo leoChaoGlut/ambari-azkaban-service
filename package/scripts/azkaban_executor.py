@@ -81,7 +81,7 @@ class ExecutorServer(Script):
                 raise ef
 
     def configure(self, env):
-        from params import azkaban_executor_properties, log4j_properties, azkaban_common
+        from params import azkaban_executor_properties, log4j_properties, azkaban_common, global_properties
         key_val_template = '{0}={1}\n'
 
         with open(path.join(azkabanConfPath, 'azkaban.properties'), 'w') as f:
@@ -96,6 +96,10 @@ class ExecutorServer(Script):
         with open(path.join(azkabanConfPath, 'log4j.properties'), 'w') as f:
             if log4j_properties.has_key('content'):
                 f.write(str(log4j_properties['content']))
+
+        with open(path.join(azkabanConfPath, 'global.properties'), 'w') as f:
+            if global_properties.has_key('content'):
+                f.write(str(global_properties['content']))
 
 
 if __name__ == '__main__':
