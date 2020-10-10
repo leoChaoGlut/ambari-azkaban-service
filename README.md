@@ -1,6 +1,8 @@
 # Intro
 Ambari 集成 Azkaban
 
+使用前，先clone.代码到本地，选择合适你的分支版本。
+
 # Major Project Structure
 - configuration : azkaban 配置文件
 - bin : Azkaban脚本修改（单机部署web、exec需要更换） 
