@@ -22,7 +22,7 @@
 <configuration>
     <property>
         <name>executor.port</name>
-        <value>12321</value>
+        <value>10201</value>
     </property>
     <property>
         <name>azkaban.jobtype.plugin.dir</name>
@@ -42,5 +42,9 @@
         <description>
             example: http://localhost:10100
         </description>
+    </property>
+    <property>
+        <name>executor.props.resolve.overrideExisting.enabled</name>
+        <value>false</value>
     </property>
 </configuration>

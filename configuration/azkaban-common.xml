@@ -78,7 +78,7 @@
     </property>
     <property>
         <name>jetty.port</name>
-        <value>10200</value>
+        <value>8081</value>
     </property>
 
     <property>
@@ -113,15 +113,15 @@
     </property>
     <property require-input="true">
         <name>mysql.database</name>
-        <value></value>
+        <value>azkaban</value>
     </property>
     <property require-input="true">
         <name>mysql.user</name>
-        <value></value>
+        <value>azkaban</value>
     </property>
     <property require-input="true">
         <name>mysql.password</name>
-        <value></value>
+        <value>azkaban</value>
     </property>
     <property>
         <name>mysql.numconnections</name>

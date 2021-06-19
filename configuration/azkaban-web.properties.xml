@@ -45,7 +45,8 @@
     </property>
     <property>
         <name>azkaban.executorselector.filters</name>
-        <value>StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus</value>
+        <value>StaticRemainingFlowSize</value>
+        <!--        <value>StaticRemainingFlowSize,MinimumFreeMemory,CpuStatus</value>-->
     </property>
     <property>
         <name>azkaban.executorselector.comparator.NumberOfAssignedFlowComparator</name>
