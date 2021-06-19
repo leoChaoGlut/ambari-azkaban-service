@@ -15,15 +15,22 @@
 import json
 import os.path as path
 import time
-
-from common import azkabanHome, azkabanExecTarUrl, azkabanExecTarName, azkabanConfPath
 from resource_management.core.exceptions import ExecutionFailed, ComponentIsNotRunning
 from resource_management.core.resources.system import Execute
 from resource_management.libraries.script.script import Script
 
+from common import azkabanHome, azkabanExecTarUrl, azkabanExecTarName, azkabanConfPath, jdk11TarName, jdk11Home, \
+    jdk11Url, exportJavaHomeAndPath
+
 
 class ExecutorServer(Script):
     def install(self, env):
+        # download jdk11 and extract jdk11 tarball
+        tmpJdk11Path = '/tmp/' + jdk11TarName
+        Execute('mkdir -p {0}'.format(jdk11Home))
+        Execute('wget --no-check-certificate {0} -O {1}'.format(jdk11Url, tmpJdk11Path))
+        Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpJdk11Path, jdk11Home))
+
         Execute('yum install -y python-requests')
 
         tmpAzkabanExecTarPath = '/tmp/' + azkabanExecTarName
@@ -31,25 +38,33 @@ class ExecutorServer(Script):
         Execute('wget --no-check-certificate {0} -O {1}'.format(azkabanExecTarUrl, tmpAzkabanExecTarPath))
         Execute('tar -xf {0} -C {1} --strip-components=1'.format(tmpAzkabanExecTarPath, azkabanHome))
 
+        Execute('cd ' + azkabanHome + ' && mv bin/shutdown-exec.sh bin/stop-exec.sh')
+
         Execute(
             'cd {0} && '
             'chmod +x bin/start-exec.sh && '
-            'chmod +x bin/shutdown-exec.sh && '
+            'chmod +x bin/stop-exec.sh && '
             'chmod +s bin/internal/internal-start-executor.sh'.format(azkabanHome)
         )
 
         self.configure(env)
 
     def stop(self, env):
-        Execute('cd {0} && ./bin/shutdown-exec.sh'.format(azkabanHome))
+        self.configure(env)
+
+        Execute('cd ' + azkabanHome + ' && ' + exportJavaHomeAndPath + ' && ./bin/stop-exec.sh')
 
     def start(self, env):
         self.configure(env)
-        Execute('cd {0} && ./bin/start-exec.sh'.format(azkabanHome))
+
         from params import azkaban_executor_properties
-        executor_port = int(azkaban_executor_properties['executor.port'])
-        url = 'http://127.0.0.1:{0}/executor?action=ping'.format(executor_port)
-        maxRetryCount = 10
+
+        executorPort = azkaban_executor_properties['executor.port']
+
+        Execute('cd ' + azkabanHome + ' && ' + exportJavaHomeAndPath + ' && ./bin/start-exec.sh')
+
+        url = 'http://localhost:{0}/executor?action=ping'.format(executorPort)
+        maxRetryCount = 30
         retryCount = 0
         import requests
         while True:
@@ -58,7 +73,7 @@ class ExecutorServer(Script):
                 print(resp.text)
                 if json.loads(resp.text)['status'] == 'alive':
                     print('executor is alive')
-                    Execute('curl -G "localhost:{0}/executor?action=activate" && echo'.format(executor_port))
+                    Execute('curl -G "localhost:{0}/executor?action=activate" && echo'.format(executorPort))
                     print('after activate')
                     break
             except:
@@ -66,13 +81,13 @@ class ExecutorServer(Script):
             time.sleep(1)
             retryCount += 1
             if retryCount > maxRetryCount:
-                raise Exception('web start failed')
+                raise Exception('Exec start failed')
 
     def status(self, env):
         # TODO 可优化,和start逻辑一致
         try:
             Execute(
-                'export AZ_CNT=`ps -ef |grep -v grep |grep azkaban-exec-server | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
+                'export AZ_CNT=`ps -ef |grep -v grep |grep "azkaban.execapp.AzkabanExecutorServer" | wc -l` && `if [ $AZ_CNT -ne 0 ];then exit 0;else exit 3;fi `'
             )
         except ExecutionFailed as ef:
             if ef.code == 3:

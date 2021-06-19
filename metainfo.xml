@@ -20,21 +20,17 @@
         <service>
             <name>AZKABAN</name>
             <displayName>Azkaban</displayName>
-            <comment>Azkaban is a batch workflow job scheduler created at LinkedIn to run Hadoop jobs. Azkaban resolves
-                the ordering through job dependencies and provides an easy to use web user interface to maintain and
-                track your workflows.
-            </comment>
-            <version>3.90.0</version>
-            <quickLinksConfigurations>
-                <quickLinksConfiguration>
-                    <fileName>quicklinks.json</fileName>
-                    <default>true</default>
-                </quickLinksConfiguration>
-            </quickLinksConfigurations>
+            <version>ece1393e</version>
+            <!--            <quickLinksConfigurations>-->
+            <!--                <quickLinksConfiguration>-->
+            <!--                    <fileName>quicklinks.json</fileName>-->
+            <!--                    <default>true</default>-->
+            <!--                </quickLinksConfiguration>-->
+            <!--            </quickLinksConfigurations>-->
             <components>
                 <component>
                     <name>AZKABAN_WEB</name>
-                    <displayName>Azkaban Web Server</displayName>
+                    <displayName>AZKABAN_WEB</displayName>
                     <category>MASTER</category>
                     <cardinality>1</cardinality>
                     <versionAdvertised>true</versionAdvertised>
@@ -42,13 +38,13 @@
                     <commandScript>
                         <script>scripts/azkaban_web.py</script>
                         <scriptType>PYTHON</scriptType>
-                        <timeout>300</timeout>
+                        <timeout>60</timeout>
                     </commandScript>
                 </component>
 
                 <component>
                     <name>AZKABAN_EXECUTOR</name>
-                    <displayName>Azkaban Executor Server</displayName>
+                    <displayName>AZKABAN_EXECUTOR</displayName>
                     <category>SLAVE</category>
                     <cardinality>0+</cardinality>
                     <versionAdvertised>true</versionAdvertised>
@@ -56,6 +52,7 @@
                     <commandScript>
                         <script>scripts/azkaban_executor.py</script>
                         <scriptType>PYTHON</scriptType>
+                        <timeout>60</timeout>
                     </commandScript>
                 </component>
 

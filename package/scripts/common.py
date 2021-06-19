@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-
 import ConfigParser
+import os
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 config = ConfigParser.ConfigParser()
@@ -28,3 +27,9 @@ azkabanExecTarUrl = config.get('download', 'azkaban_executor_tar_url')
 
 azkabanWebTarName = azkabanWebTarUrl.split('/')[-1]
 azkabanExecTarName = azkabanExecTarUrl.split('/')[-1]
+
+jdk11Url = config.get('download', 'jdk11_url')
+jdk11TarName = jdk11Url.split('/')[-1]
+jdk11Home = '/data/jdk11/'
+
+exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
