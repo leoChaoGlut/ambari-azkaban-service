@@ -44,7 +44,7 @@ class ExecutorServer(Script):
             'cd {0} && '
             'chmod +x bin/start-exec.sh && '
             'chmod +x bin/stop-exec.sh && '
-            'chmod +s bin/internal/internal-start-executor.sh'.format(azkabanHome)
+            'chmod +x bin/internal/internal-start-executor.sh'.format(azkabanHome)
         )
 
         self.configure(env)

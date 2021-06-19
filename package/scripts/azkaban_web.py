@@ -42,7 +42,7 @@ class WebServer(Script):
             'cd {0} && '
             'chmod +x bin/start-web.sh && '
             'chmod +x bin/stop-web.sh && '
-            'chmod +s bin/internal/internal-start-web.sh'.format(azkabanHome)
+            'chmod +x bin/internal/internal-start-web.sh'.format(azkabanHome)
         )
 
         self.configure(env)
