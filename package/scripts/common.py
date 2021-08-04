@@ -19,7 +19,8 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config = ConfigParser.ConfigParser()
 config.readfp(open(os.path.join(script_dir, 'download.ini')))
 
-azkabanHome = '/data/azkaban'
+azkabanHomePrefix = '/home/service/var/data1'
+azkabanHome = azkabanHomePrefix + '/azkaban'
 azkabanConfPath = azkabanHome + '/conf'
 
 azkabanWebTarUrl = config.get('download', 'azkaban_web_tar_url')
@@ -30,6 +31,6 @@ azkabanExecTarName = azkabanExecTarUrl.split('/')[-1]
 
 jdk11Url = config.get('download', 'jdk11_url')
 jdk11TarName = jdk11Url.split('/')[-1]
-jdk11Home = '/data/jdk11/'
+jdk11Home = azkabanHomePrefix + '/jdk11/'
 
 exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
