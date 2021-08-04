@@ -19,7 +19,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config = ConfigParser.ConfigParser()
 config.readfp(open(os.path.join(script_dir, 'download.ini')))
 
-azkabanHomePrefix = '/home/service/var/data1'
+azkabanHomePrefix = '/home/service/var/data1/azkaban'
 azkabanHome = azkabanHomePrefix + '/azkaban'
 azkabanConfPath = azkabanHome + '/conf'
 
