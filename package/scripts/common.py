@@ -29,8 +29,8 @@ azkabanExecTarUrl = config.get('download', 'azkaban_executor_tar_url')
 azkabanWebTarName = azkabanWebTarUrl.split('/')[-1]
 azkabanExecTarName = azkabanExecTarUrl.split('/')[-1]
 
-jdk11Url = config.get('download', 'jdk11_url')
-jdk11TarName = jdk11Url.split('/')[-1]
-jdk11Home = azkabanHomePrefix + '/jdk11/'
+# jdk11Url = config.get('download', 'jdk11_url')
+# jdk11TarName = jdk11Url.split('/')[-1]
+# jdk11Home = azkabanHomePrefix + '/jdk11/'
 
-exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
+# exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
