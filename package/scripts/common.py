@@ -33,4 +33,4 @@ jdk11Url = config.get('download', 'jdk11_url')
 jdk11TarName = jdk11Url.split('/')[-1]
 jdk11Home = azkabanHomePrefix + '/jdk11/'
 
-# exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
+exportJavaHomeAndPath = ' export JAVA_HOME=' + jdk11Home + ' && export PATH=${JAVA_HOME}/bin:$PATH '
