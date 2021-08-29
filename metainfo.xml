@@ -20,7 +20,7 @@
         <service>
             <name>AZKABAN</name>
             <displayName>Azkaban</displayName>
-            <version>ece1393e</version>
+            <version>3.90.0</version>
             <!--            <quickLinksConfigurations>-->
             <!--                <quickLinksConfiguration>-->
             <!--                    <fileName>quicklinks.json</fileName>-->
